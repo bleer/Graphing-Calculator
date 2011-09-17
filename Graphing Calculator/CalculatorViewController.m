@@ -112,6 +112,7 @@
             tempExpression = [CalculatorBrain descriptionOfExpression:brain.expression];
         }
         if ([@"GRAPH" isEqual:operation]) {
+            variablePressed = NO; // reset variablePressed for next go-around
             GraphViewController *gvc = [[GraphViewController alloc] init];
             gvc.title = @"Graph";
             gvc.view.autoresizesSubviews = YES;
