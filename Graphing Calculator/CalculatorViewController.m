@@ -50,6 +50,7 @@
         NSString *tempExpression;
         tempExpression = [CalculatorBrain descriptionOfExpression:brain.expression];
         [self.display setText:[tempExpression stringByAppendingString:self.digit]];
+        [self.miniDisplay setText:self.digit];
     }
     else {
         [self.display setText:self.digit];
