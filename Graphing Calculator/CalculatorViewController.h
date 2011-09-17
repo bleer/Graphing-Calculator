@@ -22,7 +22,6 @@
 @property (assign) IBOutlet UILabel *displayMemory;
 @property (assign) IBOutlet UILabel *miniDisplay; // Shows current operand
 @property (assign) IBOutlet UISwitch *radiansDegreesSwitch;
-//@property (strong, nonatomic) GraphViewController *gvc;
 
 - (IBAction) digitPressed: (UIButton *) sender;
 - (IBAction) operationPressed: (UIButton *) sender;

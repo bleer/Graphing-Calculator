@@ -32,17 +32,13 @@
 - (IBAction)digitPressed:(UIButton *)sender
 {
     operandIsAVariable = NO;
-    //    if (expressionSolved) {
-    //        [[self brain] performOperation:@"C"]; // Perform Clear operation
-    //        expressionSolved = NO;
-    //    }
     self.digit = [[sender titleLabel] text];
     if ([@"Π" isEqual:self.digit]) {
         self.digit = @"3.14159265";
     }
     if (userIsInTheMiddleOfTypingANumber) {
         NSRange range = [self.display.text rangeOfString:@"."];
-        if ((range.length < 1) || (![@"." isEqual:self.digit])) { // Ignore more than one decimal
+        if ((range.length < 1) || (![self.digit isEqual:@"."])) { // Ignore more than one decimal
             [self.display setText:[self.display.text stringByAppendingString:self.digit]];
             self.miniDisplay.text = [self.miniDisplay.text stringByAppendingString:self.digit];
         }
@@ -57,12 +53,6 @@
         [self.miniDisplay setText:self.digit];
     }
     userIsInTheMiddleOfTypingANumber = YES;
-    //    NSString *tempText;
-    //    if (![self.miniDisplay.text isEqualToString: @"0"]) {
-    //        tempText = self.miniDisplay.text;
-    //    } else
-    //    { tempText = @"";
-    //    }
 }
 
 - (IBAction)operationPressed:(UIButton *)sender;
@@ -81,7 +71,7 @@
         }
     } else {
         NSString *checkText = self.display.text;
-        if (([@"0" isEqual:checkText]) && ([@"INV" isEqual:operation])) {
+        if (([checkText isEqual:@"0"]) && ([operation isEqual:@"INV"])) {
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:@"Divide by Zero Error."
                                   message:@"Cannot Use Inverse When Operand is 0."
@@ -95,11 +85,10 @@
                 userIsInTheMiddleOfTypingANumber = NO;
             }
             double result;
-            if (!([@"GRAPH" isEqual:operation])) { // don't perform the operation if GRAPH is chosen
+            if (!([operation isEqual:@"GRAPH"])) { // don't perform the operation if GRAPH is chosen
                 result = [[self brain] performOperation:operation];
-                if (!operandIsAVariable || ([@"C" isEqual:operation])) { // not an equation or if Clear operation
+                if (!operandIsAVariable || ([operation isEqual:@"C"])) { // not an equation or if Clear operation
                     [self.display setText:[NSString stringWithFormat:@"%g", result]]; // update display
-//                    self.miniDisplay.text = @""; // reset miniDisplay
                 }
             }
         }
@@ -111,13 +100,12 @@
             NSString *tempExpression;
             tempExpression = [CalculatorBrain descriptionOfExpression:brain.expression];
         }
-        if ([@"GRAPH" isEqual:operation]) {
+        if ([operation isEqual:@"GRAPH"]) {
             variablePressed = NO; // reset variablePressed for next go-around
             GraphViewController *gvc = [[GraphViewController alloc] init];
             gvc.title = @"Graph";
             gvc.view.autoresizesSubviews = YES;
             gvc.expressionForGraph = brain.expression;
-            NSLog(@"brain.expression:%@",brain.expression);
             [self.navigationController pushViewController:gvc animated:YES];
         }
     }
@@ -127,10 +115,6 @@
 {
     variablePressed = YES;
     operandIsAVariable = YES;
-    //    if (expressionSolved) {
-    //        [[self brain] performOperation:@"C"]; // Perform Clear operation
-    //        expressionSolved = NO;
-    //    }
     NSString *variableName = [[sender titleLabel] text];
     [[self brain] setVariableAsOperand:variableName];
     [self.display setText:[CalculatorBrain descriptionOfExpression: brain.expression]];

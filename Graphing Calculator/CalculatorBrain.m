@@ -51,13 +51,13 @@
     if (!self.waitingOperation) {
         return;
     }
-    if ([@"+" isEqual:waitingOperation]) {
+    if ([waitingOperation isEqual:@"+"]) {
         operand = waitingOperand + operand;
-    } else if ([@"-" isEqual:waitingOperation]) {
+    } else if ([waitingOperation isEqual:@"-"]) {
         operand = waitingOperand - operand;
-    } else if ([@"*" isEqual:waitingOperation]) {
+    } else if ([waitingOperation isEqual:@"*"]) {
         operand = waitingOperand * operand;
-    } else if ([@"/" isEqual:waitingOperation]) {
+    } else if ([waitingOperation isEqual:@"/"]) {
         if (operand) {
             operand = waitingOperand / operand;
         } else {
