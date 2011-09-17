@@ -133,6 +133,7 @@
     NSString *variableName = [[sender titleLabel] text];
     [[self brain] setVariableAsOperand:variableName];
     [self.display setText:[CalculatorBrain descriptionOfExpression: brain.expression]];
+    [self.miniDisplay setText:variableName];
 }
 
 - (IBAction) changeRadiansDegreesSwitch: (id) sender {  
