@@ -44,8 +44,8 @@
         NSRange range = [self.display.text rangeOfString:@"."];
         if ((range.length < 1) || (![@"." isEqual:self.digit])) { // Ignore more than one decimal
             [self.display setText:[self.display.text stringByAppendingString:self.digit]];
+            self.miniDisplay.text = [self.miniDisplay.text stringByAppendingString:self.digit];
         }
-        self.miniDisplay.text = [self.miniDisplay.text stringByAppendingString:self.digit];
     } else if (variablePressed) {
         NSString *tempExpression;
         tempExpression = [CalculatorBrain descriptionOfExpression:brain.expression];
