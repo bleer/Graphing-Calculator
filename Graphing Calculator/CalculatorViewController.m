@@ -3,7 +3,7 @@
 //  Calculator
 //
 //  Created by Michael Mangold on 6/18/11.
-//  Copyright 2011 Michael Mangold. All rights reserved.
+//  Copyright 2011 Michael Mangold. All rights reserved..
 //
 
 #import "CalculatorViewController.h"
