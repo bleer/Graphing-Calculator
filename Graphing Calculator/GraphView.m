@@ -35,6 +35,7 @@
 
 - (void) drawGraph:(CGRect)theGraph atOrigin:(CGPoint)theMidPoint withScale:(CGFloat)theScale inContext:(CGContextRef)theContext
 {
+   
     UIGraphicsPushContext(theContext);
     [[UIColor blackColor] setStroke];
     [[UIColor blackColor] setFill];
@@ -43,20 +44,20 @@
     [curveColor set];
     CGContextSetLineWidth(theContext, 2);
     CGContextBeginPath(theContext);
-    CGFloat x, y;                                                     // x and y axes for local view (origin at upper-left)
-    CGFloat functionX, functionY;                                     // x and y axes for the function (origin at center)
-    CGFloat xMax = self.bounds.size.width * self.contentScaleFactor;  // x-axis maximum = width in points x pixels per point
-    CGFloat yMax = self.bounds.size.height * self.contentScaleFactor; // y-axis maximum = height in points x pixels per point
-    for (int i = 0; i <= xMax; i++) {
-        x = i;                                                        // x-axis value is simply the loop index
-        functionX = x - self.bounds.size.width / theScale / 2;        // convert to expression's coordinate system
-        functionY = [CalculatorBrain evaluateExpression:self.expression usingVariable:i]; // functionY = f(functionX)
-        y = self.bounds.size.height / 2 / theScale - functionY;
+    CGFloat xUL, yUL;                                                               // x and y axes for physical view (origin at upper-left)
+    CGFloat xC, yC;                                                                 // x and y axes for the function (origin at center)
+    CGFloat xULMax = self.bounds.size.width * self.contentScaleFactor;              // x-axis maximum = width in points x pixels per point
+    CGFloat yULMax = self.bounds.size.height * self.contentScaleFactor;             // y-axis maximum = height in points x pixels per point
+    for (int i = 0; i <= xULMax; i++) {                                             // sweep across the physical x-axis
+        xUL = i;                                                                    // x-axis value is simply the loop index
+        xC = (xUL - xULMax / 2) / theScale;                                         // convert x to origin-at-center coordinate system
+        yC = [CalculatorBrain evaluateExpression:self.expression usingVariable:xC]; // calculate y
+        yUL = yULMax / 2 - yC * theScale;                                           // convert y to origin-at-center coordinate system
         if (i == 0) {
-            CGContextMoveToPoint(theContext, x, y);                   // move to initial point
+            CGContextMoveToPoint(theContext, xUL, yUL);                             // move to initial point
         } else {
-            if (y <= yMax) {
-                CGContextAddLineToPoint(theContext, x, y);            // plot line only to the bottom of the graph
+            if (yUL <= yULMax) {
+                CGContextAddLineToPoint(theContext, xUL, yUL);                      // plot line only to the bottom of the graph
             }
         }
     }

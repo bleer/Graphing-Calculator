@@ -8,7 +8,7 @@
 
 #import "GraphView.h"
 #import "GraphViewController.h"
-#define DEFAULT_SCALE 46;
+#define DEFAULT_SCALE 1;
 
 @implementation GraphViewController
 
