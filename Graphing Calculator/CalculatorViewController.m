@@ -59,15 +59,23 @@
 {
     NSString *operation = [[sender titleLabel] text];
     NSString *operand = self.miniDisplay.text;
-    self.miniDisplay.text = operation;
+    if ([operation isEqual:@"C"]) {
+        self.miniDisplay.text = @"0";
+    } else {
+        self.miniDisplay.text = operation;
+    }
     if ([@"BACKSPACE" isEqual:operation]) {
         double displayTextLength = [self.display.text length];
         if ( displayTextLength > 1 ) {
             [self.display setText:[self.display.text substringToIndex:[self.display.text length] - 1]]; // strip last digit from display
+        } else {
+            self.display.text = @"0";
         }
         double miniDisplayTextLength = [self.miniDisplay.text length];
         if ( miniDisplayTextLength > 1 ) {
             [self.miniDisplay setText:[self.miniDisplay.text substringToIndex:[self.miniDisplay.text length] - 1]]; // strip last digit from miniDisplay
+        } else {
+            self.miniDisplay.text = @"0";
         }
     } else {
         NSString *checkText = self.display.text;
@@ -91,22 +99,22 @@
                     [self.display setText:[NSString stringWithFormat:@"%g", result]]; // update display
                 }
             }
-        }
-        if (!variablePressed) {
-            double transferMemory = [[self brain] setMemoryDisplay];
-            [self.displayMemory setText:[NSString stringWithFormat:@"%g", transferMemory]];
-        }
-        if (variablePressed) {
-            NSString *tempExpression;
-            tempExpression = [CalculatorBrain descriptionOfExpression:brain.expression];
-        }
-        if ([operation isEqual:@"GRAPH"]) {
-            variablePressed = NO; // reset variablePressed for next go-around
-            GraphViewController *gvc = [[GraphViewController alloc] init];
-            gvc.title = @"Graph";
-            gvc.view.autoresizesSubviews = YES;
-            gvc.expressionForGraph = brain.expression;
-            [self.navigationController pushViewController:gvc animated:YES];
+            if (!variablePressed) {
+                double transferMemory = [[self brain] setMemoryDisplay];
+                [self.displayMemory setText:[NSString stringWithFormat:@"%g", transferMemory]];
+            }
+            if (variablePressed) {
+                NSString *tempExpression;
+                tempExpression = [CalculatorBrain descriptionOfExpression:brain.expression];
+            }
+            if ([operation isEqual:@"GRAPH"]) {
+                variablePressed = NO; // reset variablePressed for next go-around
+                GraphViewController *gvc = [[GraphViewController alloc] init];
+                gvc.title = @"Graph";
+                gvc.view.autoresizesSubviews = YES;
+                gvc.expressionForGraph = brain.expression;
+                [self.navigationController pushViewController:gvc animated:YES];
+            }
         }
     }
 }
