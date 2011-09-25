@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "GraphView.h"
 
-@interface GraphViewController : UIViewController <GraphViewDelegate> {
+@interface GraphViewController : UIViewController <GraphViewDelegate>
+{
     int controllerScale; // 0 to 100
     id expressionForGraph;
     GraphView *graphView;

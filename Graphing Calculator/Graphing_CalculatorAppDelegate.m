@@ -20,8 +20,6 @@
     cvc = [[CalculatorViewController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     cvc.title = @"Calculator";
-//    cvc.view.autoresizesSubviews = YES;
-//    navcon.view.autoresizesSubviews = YES;
     navcon.navigationBar.tintColor = [UIColor clearColor];
     [navcon pushViewController:cvc animated:NO];
     [self.window addSubview:navcon.view];

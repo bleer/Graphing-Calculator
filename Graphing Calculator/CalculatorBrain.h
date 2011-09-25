@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GraphView.h"
 
-@interface CalculatorBrain : NSObject
+@interface CalculatorBrain : NSObject <GraphViewDelegate>
 {   // instance variables
     double operand;
     NSString *waitingOperation;
     double waitingOperand;
     double memory;
     NSMutableArray *internalExpression;
+    BOOL errorForGraph;
+    GraphView *graphView;
 }
 
 - (void)setOperand:(double)anOperand :(BOOL)radiansIsSelected;
@@ -27,6 +30,8 @@
 @property (nonatomic) double operand;
 @property double waitingOperand;
 @property double memory;
+@property (strong, nonatomic) IBOutlet GraphView *graphView;
+@property (nonatomic) BOOL errorForGraph;
 
 + (double)evaluateExpression:(id)anExpression usingVariable:(double)variable;
 + (NSSet *)variablesInExpression:(id)anExpression;

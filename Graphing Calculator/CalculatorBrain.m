@@ -11,12 +11,13 @@
 
 @implementation CalculatorBrain
 
-@synthesize expression, waitingOperation, operand, waitingOperand, memory;
+@synthesize graphView, expression, waitingOperation, operand, waitingOperand, memory, errorForGraph;
 
 // overriding the default initializer
 - (id) init {
     // initializing the internalExpression array
     internalExpression = [[NSMutableArray alloc] init];
+    self.graphView.delegate = self;
     return self;
 }
 
@@ -82,6 +83,7 @@
                                   delegate:nil
                                   cancelButtonTitle:@"Okay"
                                   otherButtonTitles:nil];
+            self.errorForGraph = YES;
             [alert show];
         }
         else {
@@ -191,6 +193,11 @@
     // return a copy of the internal expression mutable array
     NSMutableArray *exp = [propertyList copy];
     return exp;
+}
+
+- (BOOL) errorForGraphView:(GraphView *)requestor
+{
+    return self.errorForGraph;
 }
 
 @end

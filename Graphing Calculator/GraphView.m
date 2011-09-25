@@ -35,7 +35,6 @@
 
 - (void) drawGraph:(CGRect)theGraph atOrigin:(CGPoint)theMidPoint withScale:(CGFloat)theScale inContext:(CGContextRef)theContext
 {
-   
     UIGraphicsPushContext(theContext);
     [[UIColor blackColor] setStroke];
     [[UIColor blackColor] setFill];
@@ -52,6 +51,10 @@
         xUL = i;                                                                    // x-axis value is simply the loop index
         xC = (xUL - xULMax / 2) / theScale;                                         // convert x to origin-at-center coordinate system
         yC = [CalculatorBrain evaluateExpression:self.expression usingVariable:xC]; // calculate y
+        BOOL error = [self.delegate errorForGraphView:self];
+        if (error == YES) {
+            break;
+        }
         yUL = yULMax / 2 - yC * theScale;                                           // convert y to origin-at-center coordinate system
         if (i == 0) {
             CGContextMoveToPoint(theContext, xUL, yUL);                             // move to initial point
@@ -67,7 +70,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    // Use delegate here to get scale
+// Use delegate here to get scale
     float scale = [self.delegate scaleForGraphView:self];
     if (scale < 1) {
         scale = 1;

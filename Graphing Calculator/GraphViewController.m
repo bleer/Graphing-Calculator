@@ -39,6 +39,14 @@
     [self.graphView setNeedsDisplay];
 }
 
+- (void) setControllerScale: (int)newControllerScale
+{
+    if (newControllerScale < 0) newControllerScale = 0;
+    if (newControllerScale > 100) newControllerScale = 100;
+    controllerScale = newControllerScale;
+    [self updateUI];
+}
+
 - (float) scaleForGraphView:(GraphView *) requester;
 {
     float tempScale = 0;
@@ -46,14 +54,6 @@
         tempScale = (float)self.controllerScale;
     }
     return tempScale;
-}
-
-- (void) setControllerScale: (int)newControllerScale
-{
-    if (newControllerScale < 0) newControllerScale = 0;
-    if (newControllerScale > 100) newControllerScale = 100;
-    controllerScale = newControllerScale;
-    [self updateUI];
 }
 
 - (id) expressionForGraphView:(GraphView *)requestor

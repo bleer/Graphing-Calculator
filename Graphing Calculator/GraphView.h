@@ -11,8 +11,10 @@
 @class GraphView;
 
 @protocol GraphViewDelegate
+@optional
 - (float) scaleForGraphView:(GraphView *) requester;   // scale to zoom graph
 - (id) expressionForGraphView:(GraphView *) requestor; // expression to be graphed
+- (BOOL) errorForGraphView:(GraphView *) requestor; // was an error alert shown?
 @end
 
 @interface GraphView : UIView {
